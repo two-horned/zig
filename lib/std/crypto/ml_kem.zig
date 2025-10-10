@@ -636,9 +636,9 @@ test "invNTTReductions bounds" {
 
 // Invert modulo p.
 fn invertMod(a: anytype, p: @TypeOf(a)) @TypeOf(a) {
-    const gcd, const x, _ = std.math.egcd(a, p);
-    assert(gcd == 1);
-    return x;
+    const r = std.math.egcd(a, p);
+    assert(r.gcd == 1);
+    return r.bezout_coeff_1;
 }
 
 // Reduce mod q for testing.

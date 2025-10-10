@@ -3,10 +3,6 @@ const std = @import("../std.zig");
 
 /// Result type of `egcd`.
 pub fn ExtendedGreatestCommonDivisor(S: anytype) type {
-    if (@typeInfo(S) != .int or @typeInfo(S).int.signedness != .signed) {
-        @compileError("`S` must be a signed integer.");
-    }
-
     return struct {
         gcd: S,
         bezout_coeff_1: S,
@@ -62,51 +58,65 @@ test {
     {
         const a: i32 = 0;
         const b: i32 = 5;
-        const s, const t = egcd(a, b);
-        const g = std.math.gcd(@abs(a), @abs(b));
+        const r = egcd(a, b);
+        const g = r.gcd;
+        const s = r.bezout_coeff_1;
+        const t = r.bezout_coeff_2;
         try std.testing.expect(s * a + t * b == g);
     }
     {
         const a: i32 = 5;
         const b: i32 = 0;
-        const s, const t = egcd(a, b);
-        const g = std.math.gcd(@as(u32, @intCast(a)), @as(u32, @intCast(b)));
+        const r = egcd(a, b);
+        const g = r.gcd;
+        const s = r.bezout_coeff_1;
+        const t = r.bezout_coeff_2;
         try std.testing.expect(s * a + t * b == g);
     }
 
     {
         const a: i32 = 21;
         const b: i32 = 15;
-        const s, const t = egcd(a, b);
-        const g = std.math.gcd(@abs(a), @abs(b));
+        const r = egcd(a, b);
+        const g = r.gcd;
+        const s = r.bezout_coeff_1;
+        const t = r.bezout_coeff_2;
         try std.testing.expect(s * a + t * b == g);
     }
     {
         const a: i32 = -21;
         const b: i32 = 15;
-        const s, const t = egcd(a, b);
-        const g = std.math.gcd(@abs(a), @abs(b));
+        const r = egcd(a, b);
+        const g = r.gcd;
+        const s = r.bezout_coeff_1;
+        const t = r.bezout_coeff_2;
         try std.testing.expect(s * a + t * b == g);
     }
     {
         const a = -21;
         const b = 15;
-        const s, const t = egcd(a, b);
-        const g = std.math.gcd(@abs(a), @abs(b));
+        const r = egcd(a, b);
+        const g = r.gcd;
+        const s = r.bezout_coeff_1;
+        const t = r.bezout_coeff_2;
         try std.testing.expect(s * a + t * b == g);
     }
     {
         const a = 927372692193078999176;
         const b = 573147844013817084101;
-        const s, const t = egcd(a, b);
-        const g = std.math.gcd(@abs(a), @abs(b));
+        const r = egcd(a, b);
+        const g = r.gcd;
+        const s = r.bezout_coeff_1;
+        const t = r.bezout_coeff_2;
         try std.testing.expect(s * a + t * b == g);
     }
     {
         const a = 453973694165307953197296969697410619233826;
         const b = 280571172992510140037611932413038677189525;
-        const s, const t = egcd(a, b);
-        const g = std.math.gcd(@abs(a), @abs(b));
+        const r = egcd(a, b);
+        const g = r.gcd;
+        const s = r.bezout_coeff_1;
+        const t = r.bezout_coeff_2;
         try std.testing.expect(s * a + t * b == g);
     }
 }
